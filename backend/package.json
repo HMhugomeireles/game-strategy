@@ -9,16 +9,18 @@
   },
   "main": "src/server.ts",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpileOnly ./src/server.ts",
+    "dev": "ENVTYPE=DEV PORT=4444 ts-node-dev --respawn --transpileOnly ./src/server.ts",
     "prod": "tsc && node ./build/app.js",
     "tsc": "tsc"
   },
   "dependencies": {
+    "@types/uuid-js": "^0.7.2",
     "body-parser": "^1.19.0",
     "dotenv": "^8.0.0",
     "envalid": "^5.0.0",
     "express": "^4.16.4",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "uuid-js": "^0.7.5"
   },
   "devDependencies": {
     "@types/express": "^4.16.1",

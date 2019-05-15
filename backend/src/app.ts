@@ -1,34 +1,33 @@
-import express from 'express';
 import bodyParser from 'body-parser';
+import express from 'express';
 import Controller from './controllers/interfaces/controller.interface';
 
 class App {
-    public app: express.Application;
-    public port: number;
+  public app: express.Application;
 
-    constructor(controllers: Array<Controller>, port: number) {
-        this.app = express();
-        this.port = port;
+  constructor(controllers: Controller[]) {
+    this.app = express();
 
-        this.initMiddlewares();
-        this.initControllers(controllers);
-    }
+    this.initMiddlewares();
+    this.initControllers(controllers);
+  }
 
-    private initMiddlewares() {
-        this.app.use(bodyParser.json);
-    }
+  public listen() {
+    this.app.listen(process.env.PORT, () => {
+      console.log(`App started on port ${process.env.PORT}.`);
+    });
+  }
 
-    private initControllers(controllers: Array<Controller>) {
-        controllers.forEach(controller => {
-            this.app.use('/', controller.router);
-        });
-    }
+  private initMiddlewares() {
+    this.app.use(bodyParser.json());
+  }
 
-    public listen(): any {
-        this.app.listen(this.port, () => {
-            console.log(`App started on port ${this.port}.`);
-        });
-    }
+  private initControllers(controllers: Controller[]) {
+    controllers.forEach((controller) => {
+      this.app.use('/', controller.router);
+    });
+  }
+
 }
 
 export default App;

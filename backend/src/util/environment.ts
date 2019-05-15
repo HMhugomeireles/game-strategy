@@ -3,35 +3,34 @@ import { cleanEnv, str } from 'envalid';
 class Environment {
   constructor() {
     this.validate();
+    this.setEnv();
   }
 
   private validate() {
     cleanEnv(process.env, {
-      ENVTYPE: str()
-    })    
+      ENVTYPE: str(),
+    });
   }
 
   private getEnvType(): string {
-    let env: any = process.env.NODE_ENV;
+    const env: any = process.env.NODE_ENV;
     return env.toString();
   }
 
-  public setEnv() {
+  private setEnv() {
     const ENV = this.getEnvType();
-    switch(ENV){
+    switch (ENV) {
       case 'DEV':
         console.log(`Environment is ${this.getEnvType()}`);
-        break;        
+        break;
       case 'PROD':
 
       case 'TEST':
-
 
     }
 
   }
 
 }
-
 
 export default Environment;

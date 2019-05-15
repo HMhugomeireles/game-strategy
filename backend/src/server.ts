@@ -1,17 +1,12 @@
 import App from './app';
 import Environment from './util/environment';
-import PlaterController from './';
+import PlayerController from './controllers/player.controller';
 
-const environment = new Environment();
-
-const PORT = 5000;
+new Environment();
 
 const app = new App([
-    new 
+    new PlayerController(),
   ],
-  PORT
  );
 
  app.listen();
-
- // MMORPG
