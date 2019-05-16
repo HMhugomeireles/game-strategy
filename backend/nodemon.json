@@ -1,4 +1,9 @@
 {
+  "env": {
+    "PORT": "4444",
+    "ENV_TYPE": "DEV",
+    "MONGO_SERVER": "mongodb+srv://gamedbmmorpgadmin:hSfNDNwdDCLwhnVw@cluster0-eckzg.mongodb.net/test?retryWrites=true"
+  },
   "watch": ["src"],
   "ext": "ts",
   "execMap": {

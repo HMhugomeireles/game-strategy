@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import mongoose from 'mongoose';
 import Util from './util/utility';
 import Controller from './controllers/interfaces/controller.interface';
 
@@ -9,9 +10,9 @@ class App {
 
 	public constructor(controllers: Controller[]) {
 		this.app = express();
-		this.port = 4441;
 
-		this.initMiddlewares();
+    this.initMiddlewares();
+    this.database();
 		this.initControllers(controllers);
 	}
 
@@ -19,7 +20,14 @@ class App {
 		Util.setEnv();
 		this.app.use(express.json());
 		this.app.use(cors());
-	}
+  }
+  
+  private database(): void {
+    console.time('Connected to Mongo DB!');
+    mongoose.connect(process.env.MONGO_SERVER, {
+      useNewUrlParser: true
+    });
+  }
 
 	private initControllers(controllers: Controller[]): void {
 		controllers.forEach((controller: Controller): void => {
@@ -28,8 +36,8 @@ class App {
 	}
 
 	public listen(): void {
-		this.app.listen(this.port, (): void => {
-			console.log(`App started on port ${this.port}.`);
+		this.app.listen(process.env.PORT, (): void => {
+			console.log(`App started on port ${process.env.PORT}.`);
 		});
 	}
 }
