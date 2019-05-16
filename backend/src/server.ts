@@ -1,12 +1,10 @@
 import App from './app';
-import Environment from './util/environment';
+
+/**
+ * All Controllers import
+ */
 import PlayerController from './controllers/player.controller';
 
-new Environment();
+const app = new App([new PlayerController()]);
 
-const app = new App([
-    new PlayerController(),
-  ],
- );
-
- app.listen();
+app.listen();

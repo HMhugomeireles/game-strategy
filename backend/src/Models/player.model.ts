@@ -1,30 +1,27 @@
 import Util from './../util/utility';
-import GenericEntity from './interfaces/entity.interface';
+import GenericEntity from './genericEntity';
 
-class Player implements GenericEntity {
-  uid: string;
-  registerAt: any;
-  updatedAt: any;
-  private user: string;
-  private pass: string;
+class Player extends GenericEntity {
+	private user: string;
+	private pass: string;
 
-  constructor(user: string, pass: string) {
-    this.uid = Util.createNewUID();
-    this.user = user;
-    this.pass = pass;
-  }
+	public constructor(user: string, pass: string) {
+		super(Util.createNewUID(), '', '');
+		this.user = user;
+		this.pass = pass;
+	}
 
-  public getUserUID():string {
-    return this.uid;
-  }
+	public getUser(): string {
+		return this.user;
+	}
 
-  public getUser():string {
-    return this.user
-  }
+	public toString(): string {
+		return `ID: ${super.getUid()} User: ${this.user}`;
+	}
 
-  public toString(): string {
-    return `ID: ${this.uid} User: ${this.user}`;
-  }
+	public getPass(): string {
+		return this.pass;
+	}
 }
 
 export default Player;

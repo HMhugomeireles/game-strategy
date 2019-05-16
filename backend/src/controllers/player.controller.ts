@@ -1,27 +1,25 @@
 import express from 'express';
-import PlayerModel from './../models/player.model';
-import Controller from './interfaces/controller.interface';
+import AbstractController from './abstractController';
 
 import PlayersMock from './../mocks/mocks';
 
-class PlayerController implements Controller {
-  public path = '/player';
-  public router = express.Router();
-  private players = PlayersMock;
+class PlayerController extends AbstractController {
+	private players = PlayersMock;
 
-  constructor() {
-    this.initRoutes();
-  }
+	public constructor() {
+		super('/player', express.Router());
+		this.initRoutes();
+	}
 
-  private initRoutes() {
-    this.router.get(this.path, this.getListPlayers);
-  }
+	private initRoutes(): void {
+		super.getRouter().get(super.getPath(), this.getListPlayers);
+	}
 
-  private getListPlayers = (req: express.Request, res: express.Response) => {
-    console.log(this.players);
-    res.status(200).json(this.players);
-  }
-
+	private getListPlayers = (req: express.Request, res: express.Response): void => {
+		console.log(req);
+		console.log(this.players);
+		res.status(200).json(this.players);
+	};
 }
 
 export default PlayerController;
