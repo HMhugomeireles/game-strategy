@@ -21,7 +21,7 @@ module.exports = {
     },
     rules: {
         '@typescript-eslint/indent': 'off',
-        "no-console": "allow",
+        "no-console": ["error", "allow"],
         indent: ["error", 4]
     }
 };

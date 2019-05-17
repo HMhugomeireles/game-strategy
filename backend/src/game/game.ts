@@ -1,0 +1,3 @@
+class Game {
+	public constructor() {}
+}
