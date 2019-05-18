@@ -17,7 +17,7 @@ class App {
 		this.io = socket(this.server);
 
 		this.initMiddlewares();
-		//this.database();
+		this.database();
 		this.clientConnection();
 		this.initControllers(controllers);
 	}
@@ -31,15 +31,17 @@ class App {
 	private clientConnection(): void {
 		this.io.on('connection', (socket: any) => {
 			console.log('Client connected! socketID:' + socket.id);
-			console.log(socket);
+      //console.log(socket);
+      
+      socket.on('disconnect', () => {
+        console.log('Client disconnected. sockedID:' + socket.id);
+      });
 
-			socket.on('started', () => {
-				this.io.emit('get_init', { status: 'connect' });
+			socket.on('started', (a) => {
+        this.io.emit('get_init', { socketId: socket.id });
+        console.log(a);
 			});
 
-			socket.on('disconnect', () => {
-				console.log('Client disconnected. sockedID:' + socket.id);
-			});
 		});
 	}
 
