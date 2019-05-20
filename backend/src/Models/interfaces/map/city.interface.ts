@@ -1,4 +1,6 @@
-export default interface City {
+import { Document } from 'mongoose';
+
+export default interface City extends Document {
     /**
    * Definition of Proprieties
    */

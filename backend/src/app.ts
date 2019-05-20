@@ -9,12 +9,14 @@ import Controller from './controllers/interfaces/controller.interface';
 class App {
 	private app: express.Application;
 	private server: any;
-	private io: any;
+  private io: any;
+  private onlineUsers: number;
 
 	public constructor(controllers: Controller[]) {
 		this.app = express();
 		this.server = httpModule.createServer(this.app);
-		this.io = socket(this.server);
+    this.io = socket(this.server);
+    this.onlineUsers = 0;
 
 		this.initMiddlewares();
 		this.database();
@@ -31,15 +33,23 @@ class App {
 	private clientConnection(): void {
 		this.io.on('connection', (socket: any) => {
 			console.log('Client connected! socketID:' + socket.id);
-      //console.log(socket);
-      
+      this.onlineUsers+=1;
+
       socket.on('disconnect', () => {
         console.log('Client disconnected. sockedID:' + socket.id);
       });
 
-			socket.on('started', (a) => {
-        this.io.emit('get_init', { socketId: socket.id });
-        console.log(a);
+      socket.emit('onlineUsers', {
+        onlineUsers: this.onlineUsers
+      });
+
+			socket.on('sendMsg', (arg) => {
+        console.log(arg)
+        this.io.emit('msg', 
+        { 
+          userID: socket.id,
+          msg: arg.userMsg
+        });
 			});
 
 		});
@@ -64,10 +74,6 @@ class App {
 		this.server.listen(process.env.PORT, (): void => {
 			console.log(`App started on port ${process.env.PORT}.`);
 		});
-		/*
-		this.app.listen(process.env.PORT, (): void => {
-			console.log(`App started on port ${process.env.PORT}.`);
-		});*/
 	}
 }
 
