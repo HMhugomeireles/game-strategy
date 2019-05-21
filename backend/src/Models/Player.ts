@@ -2,28 +2,18 @@ import { Schema, model } from 'mongoose';
 import Util from './../util/utility';
 import PlayerInterface from './interfaces/player/player.interface';
 
-const PlayerSchema = new Schema(
-	{
-		uid: {
-			type: String,
-			set: (): string => Util.createNewUID()
-		},
-		nick: {
-			type: String,
-			required: true
-		},
-		username: {
-			type: String,
-			required: true
-		},
-		password: {
-			type: String,
-			required: true
+const PlayerSchema = new Schema({
+		uid: { type: String, default: (): string => Util.createNewUID() },
+		nick: { type: String, required: true
 		},
 		email: {
-			type: String,
+      type: String,
 			required: true
 		},
+    password: {
+      type: String,
+      required: true
+    },
 		worldRoom: {
 			type: String,
 			required: true
@@ -35,17 +25,14 @@ const PlayerSchema = new Schema(
 		cityRoom: {
 			type: String,
 			required: true
-		},
-		landRoom: {
-			type: String,
-			required: true
-		},
+    },
+    level: { type: Number },
+    experience: { type: Number },
 		lastLogin: {
 			type: Date,
 			default: Date.now()
 		}
-	},
-	{
+	}, {
 		timestamps: true
 	}
 );

@@ -6,12 +6,14 @@ export default interface Player extends Document {
    * Definition of Proprieties
    */
 	uid: string;
-	nick: string;
-	username: string;
-	password: string;
+  nick: string;
+  email: string;
+  password: string;
+  worldRoom: string;
+  countryRoom: String;
+  cityRoom: String;
 	level: number;
 	experience: Number;
-	Online: boolean;
 
 	/**
    * Definition of Methods
@@ -20,5 +22,4 @@ export default interface Player extends Document {
 	getPlayerNick(): string;
 	getPlayerLevel(): number;
 	getPlayerExperience(): Number;
-	getPlayerStatus(): EnumStatus;
 };

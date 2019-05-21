@@ -22,28 +22,9 @@ class PlayerController extends AbstractController {
 	}
 
 	public async createPlayer(req: Request, res: Response): Promise<Response> {
-		let pwHash: string;
-		const salt = await bcrypt.genSalt(10);
-		await bcrypt.hash(req.body.password, salt, (err, hash) => {
-			pwHash = hash;
-		});
-
-		console.log(pwHash);
-
-		const player = {
-			uid: Util.createNewUID(),
-			nick: req.body.nick,
-			username: req.body.username,
-			password: pwHash,
-			email: req.body.email,
-			worldRoom: req.body.wordRoom,
-			countryRoom: req.body.countryRoom,
-			cityRoom: req.body.cityRoom,
-			landRoom: req.body.landRoom
-		};
-
-		const resCreate = await Player.create(player);
-		console.log(resCreate);
+   req.body.password = bcrypt.hashSync(req.body.password, 10);
+   const resCreate = await Player.create(req.body);
+   console.log(resCreate);
 
 		return res.status(201).json(resCreate);
 	}
