@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import ControllerInterface from './interfaces/controller.interface';
+import ControllerInterface from '../interfaces/controller.interface';
 
 export default abstract class Controller implements ControllerInterface {
 	// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility

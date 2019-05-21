@@ -1,20 +1,28 @@
+import { createServer, Server } from 'http';
 import express from 'express';
+import socket from 'socket.io';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import Util from './util/utility';
 import Controller from './controllers/interfaces/controller.interface';
-import SocketsServer from './middlewares/socketServer';
+import socketsActions from './middlewares/socket/socketsArray';
+import SocketActionInterface from './middlewares/socket/socketAction.interface';
 
 class App {
-	private app: express.Application;
-	private onlineUsers: number;
+  private app: express.Application;
+  private server: Server;
+	private io: SocketIO.Server;
+  private onlineUsers: number;
+  
 
 	public constructor(controllers: Controller[]) {
-		this.app = express();
+    this.app = express();
+    this.server = createServer(this.app);
+		this.io = socket(this.server);
 		this.onlineUsers = 0;
 
-		this.initMiddlewares();
 		this.database();
+		this.initMiddlewares();
 		this.socketsConnection();
 		this.initControllers(controllers);
 	}
@@ -26,7 +34,20 @@ class App {
 	}
 
 	private socketsConnection(): void {
-		new SocketsServer(this.app);
+    this.io.on('connection', (socketClient) => {
+
+      socketClient.on('disconnect', () => {
+        this.onlineUsers-=1;
+        console.log('Client disconnect from chat Server.');
+      });
+
+      // Send number of connection
+      socketClient.emit('onlineUsers', { onlineUsers: this.onlineUsers+=1 });
+
+      socketsActions.forEach( (socketAction: SocketActionInterface): void => {
+        socketAction.start(socketClient, this.io);
+      });
+    });
 	}
 
 	private database(): void {

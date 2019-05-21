@@ -1,30 +1,16 @@
-import socket from 'socket.io';
+import socket, { Socket } from 'socket.io';
+import socketActionInterface from './socketAction.interface';
 
-class ChatServer {
-  private io: SocketIO.Server;
+export default class ChatServer implements socketActionInterface {
 
-  public constructor(socketServer: SocketIO.Server) {
-    this.io = socketServer;
-
-    this.start();
-  }
-
-  private start(): void {
-    this.io.on('connection', (socket) => {
-
-      socket.on('disconnect', () => {
-        console.log('Client disconnect from chat Server.'):
-      });
-
-			socket.on('sendMsg', (arg) => {
+  public start(socketClient: Socket, io: SocketIO.Server): void {
+			socketClient.on('sendMsg', (arg) => {
 				console.log(arg);
-				this.io.emit('msg', {
-					userID: socket.id,
+				io.emit('msg', {
+					userID: socketClient.id,
 					msg: arg.userMsg
 				});
 			});
-
-    });
   }
 
 }

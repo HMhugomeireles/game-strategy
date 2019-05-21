@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
 import AbstractController from './abstractController';
 import bcrypt from 'bcryptjs';
-import Util from './../util/utility';
-import Player from './../models/Player';
+import Util from '../../util/utility';
+import Player from '../../models/Player';
 
 class PlayerController extends AbstractController {
 	public constructor() {
