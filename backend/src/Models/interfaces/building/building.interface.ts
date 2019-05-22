@@ -1,4 +1,4 @@
-export default interface Build {
+export default interface Building {
    /**
    * Definition of Proprieties
    */

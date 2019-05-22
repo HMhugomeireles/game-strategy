@@ -3,11 +3,11 @@ import socketActionInterface from './socketAction.interface';
 
 export default class ChatServer implements socketActionInterface {
 
-  public start(socketClient: Socket, io: SocketIO.Server): void {
+  public start(name: string, socketClient: Socket, io: SocketIO.Server): void {
 			socketClient.on('sendMsg', (arg) => {
-				console.log(arg);
 				io.emit('msg', {
-					userID: socketClient.id,
+          userID: socketClient.id,
+          nick: name,
 					msg: arg.userMsg
 				});
 			});

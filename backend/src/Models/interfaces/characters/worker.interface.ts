@@ -1,4 +1,5 @@
 import Character from './character.interface';
+import Building from '../building/building.interface';
 
 interface WorkerInterface extends Character {
   /**
@@ -9,5 +10,6 @@ interface WorkerInterface extends Character {
   buildingExperience: Number;
 
   
-  
+
+  builds(building: Building): string;
 }
