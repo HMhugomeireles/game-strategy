@@ -3,9 +3,12 @@ import Util from './../util/utility';
 import LandInterface from './interfaces/map/land.interface';
 
 export const LandSchema = new Schema({
+  playerId: {
+    type: String
+  },
   uid: {
     type: String,
-    set: (): string => Util.createNewUID(),
+    default: (): string => Util.createNewUID(),
   },
   positionX: {
     type: Number,
