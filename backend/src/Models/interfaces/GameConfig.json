@@ -13,5 +13,9 @@
   },
   "build": {
     "max": 100
+  },
+  "resource": {
+    "wood": 1000,
+    "food": 1
   }
 }
