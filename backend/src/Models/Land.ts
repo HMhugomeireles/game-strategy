@@ -12,11 +12,11 @@ export const LandSchema = new Schema(
 			type: String,
 			default: Util.createNewUID()
 		},
-		positionX: {
+		positionCol: {
 			type: Number,
 			required: true
 		},
-		positionY: {
+		positionRow: {
 			type: Number,
 			required: true
 		},
