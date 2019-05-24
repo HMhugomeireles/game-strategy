@@ -1,9 +1,31 @@
 import { Schema, model } from 'mongoose';
-import PlayerInterface from './../interfaces/player/player.interface';
+import Util from './../util/utility';
+import PlayerInterface from './interfaces/player/player.interface';
 
 const PlayerSchema = new Schema({
-  uid: String,
-  nick: String,
+  _id: { type: Schema.Types.ObjectId, auto: true },
+  uid: { type: String, default: Util.createNewUID() },
+  nick: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  worldRoom: {
+    type: String,
+    required: true
+  },
+  countryRoom: {
+    type: String,
+    required: true
+  },
+  cityRoom: {
+    type: String,
+    required: true
+  },
+  level: { type: Number },
+  experience: { type: Number },
+  lastLogin: {
+    type: Date,
+    default: Date.now()
+  }
 }, {
   timestamps: true
 });

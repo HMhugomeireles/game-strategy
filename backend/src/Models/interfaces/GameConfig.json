@@ -1,0 +1,21 @@
+{
+  "world": {
+    "max": 1
+  },
+  "country": {
+    "max": 20
+  },
+  "city": {
+    "max": 20
+  },
+  "land": {
+    "max": 20
+  },
+  "build": {
+    "max": 100
+  },
+  "resource": {
+    "wood": 1000,
+    "food": 1
+  }
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Create worlds</title>
+</head>
+
+<body>
+  <h2>Create City</h2>
+  <form>
+    <p>
+      <label for="countryId">Select Country</label>
+      <select name="countryId" id="countryId">
+        <!-- Data will load -->
+      </select>
+    </p>
+    <p>
+      <label for="cityName">City name:</label>
+      <input type="text" name="cityName" id="cityName">
+    </p>
+    <p>
+      <label for="NLands">Number of Lands:</label>
+      <input type="number" name="NLands" id="NLands">
+    </p>
+  </form>
+
+  <script>
+    const eleForm = document.querySelector('form');
+    const inputSelectCountry = document.querySelector('#countryId');
+    const inputCityName = document.querySelector('#cityName');
+    const inputNLands = document.querySelector('#NLands');
+
+    window.addEventListener('load', () => {
+
+      fetch('http://localhost:4441/country')
+        .then(resBlob => resBlob.json())
+        .then(res => {
+          console.log(res);
+          res.forEach(element => {
+            let eletemp = document.createElement('option');
+            eletemp.innerHTML = `${element.email}`;
+            inputSelectCountry.appendChild(eletemp);
+          });
+        })
+        .catch(err => console.log(err));
+
+    });
+  </script>
+</body>
+
+</html>

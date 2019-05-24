@@ -1,6 +1,6 @@
 {
   "env": {
-    "PORT": "4444",
+    "PORT": "4441",
     "ENV_TYPE": "DEV",
     "MONGO_SERVER": "mongodb+srv://gamedbmmorpgadmin:hSfNDNwdDCLwhnVw@cluster0-eckzg.mongodb.net/test?retryWrites=true"
   },
