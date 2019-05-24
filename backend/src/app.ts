@@ -47,7 +47,7 @@ class App {
             this.onlineUsers.slice(index, 1);
           }
         });
-        socketClient.emit('onlineUsers', { onlineUsers: this.onlineUsers.length });
+        socketClient.broadcast.emit('onlineUsers', { onlineUsers: this.onlineUsers.length });
         console.log('Client disconnect from chat Server.');
       });
 

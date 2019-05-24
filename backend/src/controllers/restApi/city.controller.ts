@@ -3,6 +3,7 @@ import AbstractController from './abstractController';
 import Country from '../../models/Country';
 import City from '../../models/City';
 import Land from '../../models/Land';
+import { Schema } from 'mongoose';
 
 class CountryController extends AbstractController {
 	public constructor() {
@@ -41,27 +42,29 @@ class CountryController extends AbstractController {
 
 	public async createCity(req: Request, res: Response): Promise<Response> {
 		try {
-			const country = await Country.findOne({ name: req.body.idWorld }).exec();
+			const country = await Country.findOne({ name: req.body.idCountry }).exec();
 			req.body.idCountry = country._id;
 
 			const cityCreate = await City.create(req.body);
 
+      console.log(req.body.nMatrix)
 			const allLandCreate = [];
 			for (let row = 0; row < req.body.nMatrix; row++) {
 				for (let col = 0; col < req.body.nMatrix; col++) {
-					let land = {
+					let land = new Land({
 						idCity: cityCreate.id,
 						positionRow: row,
 						positionCol: col,
 						occupation: false
-					};
+          });
 					allLandCreate.push(land);
 				}
 			}
 
-			let landCreate = await Land.create(allLandCreate);
+      // create all lands for that city
+      await Land.create(allLandCreate);
 			console.log(cityCreate);
-			console.log('Number Lands create: ' + allLandCreate.length);
+			console.log('Number Lands create for this city: ' + allLandCreate.length);
 
 			return res.status(201).json(cityCreate);
 		} catch (error) {

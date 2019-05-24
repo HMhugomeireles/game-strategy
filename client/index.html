@@ -5,49 +5,87 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Create worlds</title>
+  <link rel="stylesheet" href="css.css">
+  <title>Document</title>
 </head>
+<body> 
+  
+  <div class="container">
 
-<body>
-  <h2>Create City</h2>
-  <form>
-    <p>
-      <label for="countryId">Select Country</label>
-      <select name="countryId" id="countryId">
-        <!-- Data will load -->
-      </select>
-    </p>
-    <p>
-      <label for="cityName">City name:</label>
-      <input type="text" name="cityName" id="cityName">
-    </p>
-    <p>
-      <label for="NLands">Number of Lands:</label>
-      <input type="number" name="NLands" id="NLands">
-    </p>
-  </form>
+    <p><div class="serverOnline off"></div>Online clients: <samp id="nClients"></samp></p>
+    <ul class="menu">
+      <p>
+        <h2>Worker Characters</h2>
+        <p>Number of workers: <span class="nWorkers"></span></p>
+        <p>Workers working: <span class="inWorkers"></span></p>
+      </p>
+        
+      <li>
+        <h3>Buildings</h3>
+        <li>Base: <button id="buildsBase">Build</button></li>
+      </li>
+      <li>
+        <h3>Collection</h3>
+        <li>Wood: <button id="collectionWood">Collect</button></li>
+      </li>
+    </ul>
 
+    <!--
+      <canvas id="game"></canvas>
+    -->
+  </div>
+  <div class="chat">
+    <h2>Chat</h2>
+    <ul id="chat"></ul>
+    <form id="formchat">
+      <input type="text" name="msg" id="msg" placeholder="Say something">
+      <input type="submit" value="send">
+    </form>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
   <script>
-    const eleForm = document.querySelector('form');
-    const inputSelectCountry = document.querySelector('#countryId');
-    const inputCityName = document.querySelector('#cityName');
-    const inputNLands = document.querySelector('#NLands');
+    const eleServerOnline = document.querySelector('.serverOnline');
+    const btnBuildsBase = document.querySelector('#buildsBase');
+    const btnCollectionWood = document.querySelector('#collectionWood');
+    const eleOnlineUsers = document.querySelector('#nClients');
+    const eleChat = document.querySelector('#chat');
+    const socket = io('http://localhost:4441', {
+      autoConnection: false
+    });
 
-    window.addEventListener('load', () => {
+    socket.open();
 
-      fetch('http://localhost:4441/country')
-        .then(resBlob => resBlob.json())
-        .then(res => {
-          console.log(res);
-          res.forEach(element => {
-            let eletemp = document.createElement('option');
-            eletemp.innerHTML = `${element.email}`;
-            inputSelectCountry.appendChild(eletemp);
-          });
-        })
-        .catch(err => console.log(err));
+    socket.on('onlineUsers', (arg) => {
+      eleServerOnline.classList.remove('off');
+      eleServerOnline.classList.add('on');
+      eleOnlineUsers.innerHTML = arg.onlineUsers;
+    });
+
+    socket.on('msg', (arg) => {
+      const rowEle = document.createElement('li');
+      rowEle.innerHTML = `<span>${arg.nick}</span>: ${arg.msg}`;
+
+      eleChat.appendChild(rowEle);
+
+      eleChat.scrollTop = eleChat.scrollHeight;
+    });
+
+    document.querySelector('#formchat').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      let userMsg = document.querySelector('#msg').value;
+
+      socket.emit('sendMsg', { userMsg: userMsg });
+
+      document.querySelector('#msg').value = '';
 
     });
+
+
+
+
+
   </script>
 </body>
 

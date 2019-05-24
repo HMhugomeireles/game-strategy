@@ -12,7 +12,11 @@ export const CitySchema = new Schema(
 		name: {
 			type: String,
 			required: true
-		}
+    },
+    nMatrix: {
+      type: Number,
+      required: true
+    }
 	},
 	{
 		timestamps: true

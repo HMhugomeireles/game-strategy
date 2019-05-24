@@ -3,17 +3,11 @@ import Util from './../util/utility';
 import PlayerInterface from './interfaces/player/player.interface';
 
 const PlayerSchema = new Schema({
-  _id: Schema.Types.ObjectId,
-  uid: { type: String, default: (): string => Util.createNewUID() },
+  _id: { type: Schema.Types.ObjectId, auto: true },
+  uid: { type: String, default: Util.createNewUID() },
   nick: { type: String, required: true },
-  email: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
   worldRoom: {
     type: String,
     required: true
@@ -33,8 +27,7 @@ const PlayerSchema = new Schema({
     default: Date.now()
   }
 }, {
-    timestamps: true
-  }
-);
+  timestamps: true
+});
 
 export default model<PlayerInterface>('Player', PlayerSchema);
