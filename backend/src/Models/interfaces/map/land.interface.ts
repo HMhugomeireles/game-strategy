@@ -6,8 +6,6 @@ export default interface Country extends Document {
    */
 	playerId: string;
 	uid: string;
-	x: Number;
-	y: Number;
 
 	/**
    * Definition of Methods

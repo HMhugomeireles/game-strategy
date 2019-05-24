@@ -5,9 +5,6 @@ import LandInterface from './interfaces/map/land.interface';
 export const LandSchema = new Schema(
 	{
 		idCity: { type: Schema.Types.ObjectId, ref: 'City' },
-		playerId: {
-			type: String
-		},
 		uid: {
 			type: String,
 			default: Util.createNewUID()
