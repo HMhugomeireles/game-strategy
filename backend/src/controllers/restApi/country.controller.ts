@@ -1,7 +1,7 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import AbstractController from './abstractController';
-import World from '../../models/World';
-import Country from '../../models/Country';
+import worldModel from './../../Models/world.model';
+import countryModel from './../../Models/country.model';
 
 class CountryController extends AbstractController {
 	public constructor() {
@@ -15,10 +15,10 @@ class CountryController extends AbstractController {
 		super.getRouter().get(`${super.getPath()}/:countryId`, this.getCountryById);
 	}
 
-	public async getCountryById(req: Request, res: Response): Promise<Response> {
+	public async getCountryById(req: Request, res: Response, next: NextFunction): Promise<Response> {
 		try {
 			const countryId = req.params.countryId;
-			const country = await Country.findById({ _id: countryId }).exec();
+			const country = await countryModel.findById({ _id: countryId }).exec();
 			console.log(country);
 
 			return res.status(200).json(country);
@@ -27,9 +27,9 @@ class CountryController extends AbstractController {
 		}
 	}
 
-	public async getCountries(req: Request, res: Response): Promise<Response> {
+	public async getCountries(req: Request, res: Response, next: NextFunction): Promise<Response> {
 		try {
-			const country = await Country.find();
+			const country = await countryModel.find();
 			console.log(country);
 
 			return res.status(200).json(country);
@@ -38,12 +38,15 @@ class CountryController extends AbstractController {
 		}
 	}
 
-	public async createCountry(req: Request, res: Response): Promise<Response> {
+	public async createCountry(req: Request, res: Response, next: NextFunction): Promise<Response> {
 		try {
-			const world = await World.findOne({ name: req.body.idWorld }).exec();
-			req.body.idWorld = world._id;
+			const world = await worldModel.findOne({ name: req.body.idWorld }).exec();
 
-			const countryCreate = await Country.create(req.body);
+			const country = new countryModel({
+				idWorld: world._id,
+				name: req.body.name
+			});
+			const countryCreate = await country.save();
 			console.log(countryCreate);
 
 			return res.status(201).json(countryCreate);

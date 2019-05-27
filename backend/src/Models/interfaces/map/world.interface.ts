@@ -1,18 +1,13 @@
-import { Document } from 'mongoose';
-import Country from './country.interface';
-
-export default interface World extends Document {
-  /**
+export default interface World {
+	/**
    * Definition of Proprieties
    */
-  uid: string;
-  name: string;
-  nCountries: Array<Country>;
+	uid: string;
+	name: string;
 
-  /**
+	/**
    * Definition of Methods
    */
-  getWorldUid(): string;
-  getWorldName(): string;
-
-}
+	getWorldUid(): string;
+	getWorldName(): string;
+};

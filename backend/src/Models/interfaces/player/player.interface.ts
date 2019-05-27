@@ -1,11 +1,7 @@
-import { Document } from 'mongoose';
 import EnumStatus from './../../status.enum';
 
-export default interface Player extends Document {
+export default interface PlayerInterface {
 	/**
    * Definition of Methods
    */
-	getPlayerNick(): string;
-	getPlayerLevel(): number;
-	getPlayerExperience(): Number;
 };

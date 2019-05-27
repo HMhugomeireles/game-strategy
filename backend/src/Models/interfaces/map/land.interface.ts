@@ -1,6 +1,4 @@
-import { Document } from 'mongoose';
-
-export default interface Country extends Document {
+export default interface Land {
 	/**
    * Definition of Proprieties
    */
