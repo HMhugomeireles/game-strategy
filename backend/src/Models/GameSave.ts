@@ -2,7 +2,6 @@ import { Schema, model } from 'mongoose';
 import GameSaveInterface from './interfaces/game/gameSave.interface';
 
 const GameSaveSchema = new Schema({
-  _id: Schema.Types.ObjectId,
   playerId: { type: Schema.Types.ObjectId, ref: 'Player' },
   resources: {
     wood: { type: Number, default: 0 },
@@ -14,7 +13,7 @@ const GameSaveSchema = new Schema({
   },
   characters: {
     workers: {
-      nWorkers: { type: Number, default: 0 },
+      nWorkers: { type: Number, default: 1 },
       features: {
         level: { type: Number, default: 0 },
         speed: { type: Number, default: 0 },

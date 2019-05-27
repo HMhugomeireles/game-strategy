@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import AbstractController from './abstractController';
 import Country from '../../models/Country';
 import City from '../../models/City';
-import LandSchema from '../../models/Land';
+import Land from './../../models/Land';
 
 class CountryController extends AbstractController {
 	public constructor() {
@@ -15,6 +15,7 @@ class CountryController extends AbstractController {
 		super.getRouter().post(super.getPath(), this.createCity);
 		super.getRouter().get(`${super.getPath()}/:cityName`, this.getCityById);
 		super.getRouter().get(`${super.getPath()}/:cityName/land`, this.getLandsByCityName);
+		super.getRouter().get(`${super.getPath()}/:cityName/land/position/:positionCol/:positionRow`, this.getLandInCityWithPosition);
 	}
 
 	public async getCityById(req: Request, res: Response): Promise<Response> {
@@ -51,7 +52,7 @@ class CountryController extends AbstractController {
 			for (let row = 0; row < req.body.nMatrix; row++) {
 				for (let col = 0; col < req.body.nMatrix; col++) {
 					allLandCreate.push(
-						new LandSchema({
+						new Land({
 							idCity: cityCreate.id,
 							positionRow: row,
 							positionCol: col,
@@ -62,7 +63,7 @@ class CountryController extends AbstractController {
 			}
 
 			// create all lands for that city
-			await LandSchema.create(allLandCreate);
+			await Land.create(allLandCreate);
 			console.log(cityCreate);
 			console.log('Number Lands create for this city: ' + allLandCreate.length);
 
@@ -75,14 +76,33 @@ class CountryController extends AbstractController {
 	public async getLandsByCityName(req: Request, res: Response): Promise<Response> {
 		try {
 			const cityId = await City.findOne({ name: req.params.cityName }).exec();
-			console.log(cityId);
-			const lands = LandSchema.find(cityId).exec();
-
+			const lands = await Land.find({ idCity: cityId._id }).exec();
+      console.log("Number of lands found:" + lands.length);
+      
 			return res.status(200).json(lands);
 		} catch (error) {
-			return res.status(200).json(error);
+			return res.status(500).json(error);
 		}
-	}
+  }
+  
+  public async getLandInCityWithPosition(req: Request, res: Response): Promise<Response> {
+		try {
+			const cityId = await City.findOne({ name: req.params.cityName }).exec();
+      const land = await Land.find({
+         idCity: cityId._id,
+         positionCol: req.params.positionCol,
+         positionRow: req.params.positionRow
+        }).exec();
+
+
+      console.log(land);
+      
+			return res.status(200).json(land);
+		} catch (error) {
+			return res.status(500).json(error);
+		}
+  }
+  
 }
 
 export default CountryController;

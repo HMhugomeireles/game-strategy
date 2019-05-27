@@ -4,7 +4,8 @@ import LandInterface from './interfaces/map/land.interface';
 
 export const LandSchema = new Schema(
 	{
-		idCity: { type: Schema.Types.ObjectId, ref: 'City' },
+    idCity: { type: Schema.Types.ObjectId, ref: 'City' },
+    idPlayer: { type: Schema.Types.ObjectId, ref: 'Player' },
 		uid: {
 			type: String,
 			default: Util.createNewUID()

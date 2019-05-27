@@ -3,11 +3,9 @@ import Util from './../util/utility';
 import PlayerInterface from './interfaces/player/player.interface';
 
 const PlayerSchema = new Schema({
-  _id: { type: Schema.Types.ObjectId, auto: true },
+  idUser: { type: Schema.Types.ObjectId, ref: 'User'},
   uid: { type: String, default: Util.createNewUID() },
   nick: { type: String, required: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
   worldRoom: {
     type: String,
     required: true
@@ -22,10 +20,6 @@ const PlayerSchema = new Schema({
   },
   level: { type: Number },
   experience: { type: Number },
-  lastLogin: {
-    type: Date,
-    default: Date.now()
-  }
 }, {
   timestamps: true
 });

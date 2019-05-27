@@ -3,6 +3,7 @@ import express from 'express';
 import socket from 'socket.io';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
 import Util from './util/utility';
 import Controller from './controllers/interfaces/controller.interface';
 import socketsActions from './middlewares/socket/socketsArray';
@@ -31,6 +32,7 @@ class App {
 
   private initMiddlewares(): void {
     Util.setEnv();
+    this.app.use(cookieParser());
     this.app.use(express.json());
     this.app.use(cors());
   }
