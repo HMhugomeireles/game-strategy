@@ -2,7 +2,7 @@ import { Schema, model, Document } from 'mongoose';
 import Util from '../util/utility';
 import World from './interfaces/map/world.interface';
 
-export const WorldSchema = new Schema(
+const WorldSchema = new Schema(
 	{
 		uid: {
 			type: String,

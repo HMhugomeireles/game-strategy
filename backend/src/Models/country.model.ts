@@ -1,8 +1,8 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 import Util from '../util/utility';
-import CountryInterface from './interfaces/map/country.interface';
+import Country from './interfaces/map/country.interface';
 
-export const CountrySchema = new Schema(
+const CountrySchema = new Schema(
 	{
 		idWorld: { type: Schema.Types.ObjectId, ref: 'World' },
 		uid: {
@@ -19,4 +19,6 @@ export const CountrySchema = new Schema(
 	}
 );
 
-export default model<CountryInterface>('Country', CountrySchema);
+const countryModel = model<Country & Document>('Country', CountrySchema);
+
+export default countryModel;

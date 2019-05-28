@@ -2,7 +2,7 @@ import { Schema, model, Document } from 'mongoose';
 import Util from '../util/utility';
 import Land from './interfaces/map/land.interface';
 
-export const LandSchema = new Schema(
+const LandSchema = new Schema(
 	{
 		idCity: { type: Schema.Types.ObjectId, ref: 'City' },
 		idPlayer: { type: Schema.Types.ObjectId, ref: 'Player' },

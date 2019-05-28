@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import AbstractController from './abstractController';
-import worldModel from './../../Models/world.model';
-import countryModel from './../../Models/country.model';
+import countryModel from './../../models/country.model';
+import worldModel from './../../models/world.model';
 
 class CountryController extends AbstractController {
 	public constructor() {
@@ -45,7 +45,8 @@ class CountryController extends AbstractController {
 			const country = new countryModel({
 				idWorld: world._id,
 				name: req.body.name
-			});
+      });
+      
 			const countryCreate = await country.save();
 			console.log(countryCreate);
 

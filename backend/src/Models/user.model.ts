@@ -20,8 +20,8 @@ UserSchema.pre('save', function(next: NextFunction) {
 	next();
 });
 
-UserSchema.methods.comparePassword = (passPlanText: string, callback: Function): boolean => {
-	return callback(null, bcrypt.compare(passPlanText, this.password));
+UserSchema.methods.comparePassword = (passPlanText: string, hash: string): Promise<boolean> => {
+	return bcrypt.compare(passPlanText, hash);
 };
 
 const userModel = model<User & Document>('User', UserSchema);

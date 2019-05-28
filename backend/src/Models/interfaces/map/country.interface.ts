@@ -1,7 +1,4 @@
-import { Document } from 'mongoose';
-import Player from './../player/player.interface';
-
-export default interface Country extends Document {
+export default interface Country {
     /**
    * Definition of Proprieties
    */

@@ -1,11 +1,10 @@
 import express, { Request, Response, NextFunction } from 'express';
 import AbstractController from './abstractController';
-import worldModel from '../../models/world.model';
-
+import worldModel from './../../models/world.model';
 class WorldController extends AbstractController {
 	public constructor() {
 		super('/world', express.Router());
-		this.initRoutes();
+    this.initRoutes();
 	}
 
 	private initRoutes(): void {

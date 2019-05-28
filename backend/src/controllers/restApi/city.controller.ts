@@ -1,8 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
 import AbstractController from './abstractController';
-import Country from '../../models/Country';
-import City from '../../models/City';
-import Land from './../../models/Land';
+import cityModel from './../../models/city.model';
+import landModel from './../../models/land.model';
+import countryModel from './../../models/country.model';
 
 class CountryController extends AbstractController {
 	public constructor() {
@@ -25,7 +25,7 @@ class CountryController extends AbstractController {
 
 	public async getCityById(req: Request, res: Response, next: NextFunction): Promise<Response> {
 		try {
-			const city = await City.findById({ name: req.params.cityName }).exec();
+			const city = await cityModel.findById({ name: req.params.cityName }).exec();
 			console.log(city);
 
 			return res.status(200).json(city);
@@ -36,7 +36,7 @@ class CountryController extends AbstractController {
 
 	public async getCities(req: Request, res: Response, next: NextFunction): Promise<Response> {
 		try {
-			const city = await City.find();
+			const city = await cityModel.find();
 			console.log(city);
 
 			return res.status(200).json(city);
@@ -47,17 +47,17 @@ class CountryController extends AbstractController {
 
 	public async createCity(req: Request, res: Response, next: NextFunction): Promise<Response> {
 		try {
-			const country = await Country.findOne({ name: req.body.idCountry }).exec();
+			const country = await countryModel.findOne({ name: req.body.idCountry }).exec();
 			req.body.idCountry = country._id;
 
-			const cityCreate = await City.create(req.body);
+			const cityCreate = await cityModel.create(req.body);
 
 			const allLandCreate = [];
 			// create all lands for that city
 			for (let row = 0; row < req.body.nMatrix; row++) {
 				for (let col = 0; col < req.body.nMatrix; col++) {
 					allLandCreate.push(
-						new Land({
+						new landModel({
 							idCity: cityCreate.id,
 							positionRow: row,
 							positionCol: col,
@@ -65,9 +65,10 @@ class CountryController extends AbstractController {
 						})
 					);
 				}
-			}
+      }
+      
+			await landModel.create(allLandCreate);
 
-			await Land.create(allLandCreate);
 			console.log(cityCreate);
 			console.log('Number Lands create for this city: ' + allLandCreate.length);
 
@@ -79,8 +80,8 @@ class CountryController extends AbstractController {
 
 	public async getLandsByCityName(req: Request, res: Response, next: NextFunction): Promise<Response> {
 		try {
-			const cityId = await City.findOne({ name: req.params.cityName }).exec();
-			const lands = await Land.find({ idCity: cityId._id }).exec();
+			const cityId = await cityModel.findOne({ name: req.params.cityName }).exec();
+			const lands = await landModel.find({ idCity: cityId._id }).exec();
 			console.log('Number of lands found:' + lands.length);
 
 			return res.status(200).json(lands);
@@ -91,8 +92,8 @@ class CountryController extends AbstractController {
 
 	public async getLandInCityWithPosition(req: Request, res: Response, next: NextFunction): Promise<Response> {
 		try {
-			const cityId = await City.findOne({ name: req.params.cityName }).exec();
-			const land = await Land.find({
+			const cityId = await cityModel.findOne({ name: req.params.cityName }).exec();
+			const land = await landModel.find({
 				idCity: cityId._id,
 				positionCol: req.params.positionCol,
 				positionRow: req.params.positionRow

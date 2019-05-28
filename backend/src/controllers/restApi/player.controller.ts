@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import AbstractController from './abstractController';
-import playerModel from './../../Models/player.model';
+import playerModel from './../../models/player.model';
 
 class PlayerController extends AbstractController {
 	public constructor() {

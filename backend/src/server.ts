@@ -10,8 +10,8 @@ import CityController from './controllers/restApi/city.controller';
 import AuthenticationController from './controllers/restApi/authentication.controller';
 
 const app = new App([
-	new PlayerController(),
 	new WorldController(),
+	new PlayerController(),
 	new CountryController(),
 	new CityController(),
 	new AuthenticationController()

@@ -1,8 +1,8 @@
-import { Schema, model } from 'mongoose';
-import GameSaveInterface from './interfaces/game/gameSave.interface';
+import { Schema, model, Document } from 'mongoose';
+import GameSave from './interfaces/game/gameSave.interface';
 
 const GameSaveSchema = new Schema({
-  playerId: { type: Schema.Types.ObjectId, ref: 'Player' },
+  idPlayer: { type: Schema.Types.ObjectId, ref: 'Player' },
   resources: {
     wood: { type: Number, default: 0 },
     food: { type: Number, default: 0 },
@@ -43,4 +43,6 @@ const GameSaveSchema = new Schema({
   timestamps: true
 });
 
-export default model<GameSaveInterface>('GameSave', GameSaveSchema)
+const gameSaveModel = model<GameSave & Document>('GameSave', GameSaveSchema)
+
+export default gameSaveModel;

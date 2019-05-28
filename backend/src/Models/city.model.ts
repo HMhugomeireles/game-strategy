@@ -1,8 +1,8 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 import Util from '../util/utility';
-import CityInterface from './interfaces/map/city.interface';
+import City from './interfaces/map/city.interface';
 
-export const CitySchema = new Schema(
+const CitySchema = new Schema(
 	{
 		idCountry: { type: Schema.Types.ObjectId, ref: 'Country' },
 		uid: {
@@ -23,4 +23,6 @@ export const CitySchema = new Schema(
 	}
 );
 
-export default model<CityInterface>('City', CitySchema);
+const cityModel = model<City & Document>('City', CitySchema);
+
+export default cityModel;
