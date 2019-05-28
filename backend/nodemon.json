@@ -1,6 +1,8 @@
 {
   "env": {
-    "PORT": "4441",
+    "COOKIE_NAME": "gameWebApp",
+    "SECRET": "secretApp",
+    "PORT": "4442",
     "ENV_TYPE": "DEV",
     "MONGO_SERVER": "mongodb+srv://gamedbmmorpgadmin:hSfNDNwdDCLwhnVw@cluster0-eckzg.mongodb.net/test?retryWrites=true"
   },

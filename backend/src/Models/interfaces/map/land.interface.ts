@@ -1,13 +1,9 @@
-import { Document } from 'mongoose';
-
-export default interface Country extends Document {
+export default interface Land {
 	/**
    * Definition of Proprieties
    */
 	playerId: string;
 	uid: string;
-	x: Number;
-	y: Number;
 
 	/**
    * Definition of Methods

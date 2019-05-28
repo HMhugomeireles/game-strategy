@@ -1,6 +1,5 @@
-import { Document } from 'mongoose';
 
-interface GameSaveInterface extends Document {
+interface GameSaveInterface {
 
 }
 

@@ -1,25 +1,12 @@
-import { Document } from 'mongoose';
 import EnumStatus from './../../status.enum';
+import { Schema } from 'mongoose';
 
-export default interface Player extends Document {
-	/**
-   * Definition of Proprieties
-   */
-	uid: string;
+export default interface PlayerInterface {
+  _id: Schema.Types.ObjectId;
   nick: string;
-  email: string;
-  password: string;
-  worldRoom: string;
+  worldRoom: String;
   countryRoom: String;
   cityRoom: String;
-	level: number;
-	experience: Number;
-
-	/**
-   * Definition of Methods
-   */
-	getPlayerUid(): string;
-	getPlayerNick(): string;
-	getPlayerLevel(): number;
-	getPlayerExperience(): Number;
+  level: number;
+  experience: number;
 };
