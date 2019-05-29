@@ -11,10 +11,10 @@ class CountryController extends AbstractController {
 	}
 
 	private initRoutes(): void {
-		super.getRouter().get(super.getPath(), this.getCities);
-		super.getRouter().post(super.getPath(), this.createCity);
-		super.getRouter().get(`${super.getPath()}/:cityName`, this.getCityById);
-		super.getRouter().get(`${super.getPath()}/:cityName/land`, this.getLandsByCityName);
+		super.getRouter().get(super.getPath(), super.authGuard(), this.getCities);
+		super.getRouter().post(super.getPath(), super.authGuard(), this.createCity);
+		super.getRouter().get(`${super.getPath()}/:cityName`, super.authGuard(), this.getCityById);
+		super.getRouter().get(`${super.getPath()}/:cityName/land`, super.authGuard(), this.getLandsByCityName);
 		super
 			.getRouter()
 			.get(

@@ -2,7 +2,8 @@ import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import Endpoints from '../../util/endpoint';
 
-export const secureGuard = (req: Request, res: Response, next: NextFunction) => {
+export const secureGuard = async (req: Request, res: Response, next: NextFunction) => {
+  console.log("secured")
   let tokenHeader = <string>req.headers['x-access-token'] || req.headers['authorization'];
   const host = process.env.HOST;
   const errorResponse = {
@@ -43,7 +44,7 @@ export const secureGuard = (req: Request, res: Response, next: NextFunction) => 
     process.env.SECRET, 
     { expiresIn: "1h" }
   );
-  res.setHeader("token", newToken);
+  
 
   //Call the next middleware or controller
   next();

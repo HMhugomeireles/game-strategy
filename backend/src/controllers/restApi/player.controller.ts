@@ -9,8 +9,8 @@ class PlayerController extends AbstractController {
 	}
 
 	private initRoutes(): void {
-		super.getRouter().get(super.getPath(), this.getPlayers);
-		super.getRouter().get(`${super.getPath()}/:playerId`, this.getPlayerById);
+		super.getRouter().get(super.getPath(), super.authGuard(), this.getPlayers);
+		super.getRouter().get(`${super.getPath()}/:playerId`, super.authGuard(), this.getPlayerById);
 	}
 
 	public async getPlayerById(req: Request, res: Response, next: NextFunction): Promise<Response> {

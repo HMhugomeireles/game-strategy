@@ -10,9 +10,9 @@ class CountryController extends AbstractController {
 	}
 
 	private initRoutes(): void {
-		super.getRouter().get(super.getPath(), this.getCountries);
-		super.getRouter().post(super.getPath(), this.createCountry);
-		super.getRouter().get(`${super.getPath()}/:countryId`, this.getCountryById);
+		super.getRouter().get(super.getPath(), super.authGuard(), this.getCountries);
+		super.getRouter().post(super.getPath(), super.authGuard(), this.createCountry);
+		super.getRouter().get(`${super.getPath()}/:countryId`, super.authGuard(), this.getCountryById);
 	}
 
 	public async getCountryById(req: Request, res: Response, next: NextFunction): Promise<Response> {

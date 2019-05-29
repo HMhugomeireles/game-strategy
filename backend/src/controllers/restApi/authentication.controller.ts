@@ -4,7 +4,6 @@ import userModel from './../../models/user.model';
 import playerModel from './../../models/player.model';
 import gameSaveModel from './../../models/gameSave.model';
 import WrongCredentialsException from './../../middlewares/exceptions/WrongCredentialsException';
-import User from '../../models/interfaces/user/user.interface';
 import jwt from 'jsonwebtoken';
 class Authentication extends AbstractController {
 	public constructor() {
@@ -46,8 +45,15 @@ class Authentication extends AbstractController {
 						nick: req.body.playerData.nick
 					},
 					links: {
-						userLink: `${host}/user/${userCreate._id}`,
-						playerLink: `${host}/player/${userCreate._id}`
+            login: `${host}/authentication/login`,
+						userLink: {
+              authentication: true,
+              link: `${host}/user/${userCreate._id}`
+            },
+            playerLink: {
+              authentication: true,
+              link: `${host}/player/${userCreate._id}`
+            }
 					}
 				});
 			} else {

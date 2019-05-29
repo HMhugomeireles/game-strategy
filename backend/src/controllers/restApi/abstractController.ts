@@ -1,6 +1,6 @@
-import { Router } from 'express';
+import { Router, Request } from 'express';
 import ControllerInterface from '../interfaces/controller.interface';
-
+import * as authGuard from '../../middlewares/auth/authGuard'
 
 
 export default abstract class Controller implements ControllerInterface {
@@ -18,6 +18,10 @@ export default abstract class Controller implements ControllerInterface {
 
 	public getRouter(): Router {
 		return this.router;
+  }
+
+  public authGuard() {
+    return authGuard.secureGuard;
   }
 
 }

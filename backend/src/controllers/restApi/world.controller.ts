@@ -8,9 +8,9 @@ class WorldController extends AbstractController {
 	}
 
 	private initRoutes(): void {
-		super.getRouter().get(super.getPath(), this.getWorlds);
-		super.getRouter().post(super.getPath(), this.createWorld);
-		super.getRouter().get(`${super.getPath()}/:worldId`, this.getWorldById);
+		super.getRouter().get(super.getPath(), super.authGuard(), this.getWorlds);
+		super.getRouter().post(super.getPath(), super.authGuard(), this.createWorld);
+		super.getRouter().get(`${super.getPath()}/:worldId`, super.authGuard(), this.getWorldById);
 	}
 
 	public async getWorldById(req: Request, res: Response, next: NextFunction): Promise<Response> {
