@@ -2,7 +2,9 @@ import { createServer, Server } from 'http';
 import express from 'express';
 import socket from 'socket.io';
 import cors from 'cors';
+import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import Controller from './controllers/interfaces/controller.interface';
 import socketsActions from './controllers/socket/socketsArray';
@@ -32,9 +34,15 @@ class App {
 
 	private initMiddlewares(): void {
 		this.app.use(cookieParser());
-		this.app.use(express.json());
-		this.app.use(cors());
-	}
+		this.app.use(bodyParser.json({ strict: true }));
+		//this.app.use(bodyParser.urlencoded());
+    this.app.use(cors());
+    //this.app.use(jwt({ secret: process.env.SECRET }));
+  }
+  
+  private defineHttpHeaders(): void {
+
+  }
 
 	private initErrorHandle(): void {
 		this.app.use(errorHandler);

@@ -6,8 +6,6 @@ import gameSaveModel from './../../models/gameSave.model';
 import WrongCredentialsException from './../../middlewares/exceptions/WrongCredentialsException';
 import User from '../../models/interfaces/user/user.interface';
 import jwt from 'jsonwebtoken';
-import DataStoredInToken from './../../middlewares/auth/dataStoredInToken.interface';
-import TokenData from './../../middlewares/auth/token.interface';
 class Authentication extends AbstractController {
 	public constructor() {
 		super('/authentication', express.Router());
@@ -82,13 +80,12 @@ class Authentication extends AbstractController {
         
         const host = `http://${req.headers.host}`;
         
-        //const token = this.createToken(user);
-        //res.setHeader('userCookie', [this.createCookie(token)]);
+        const token = jwt.sign( { userId: user._id }, process.env.SECRET, { expiresIn: "1h" });
+        console.log(token);
 
         return res.status(200).json({
           session: {
-            expiresIn: '',
-            token: ''
+            token: token
           },
           name: user.name,
           email: user.email,
@@ -111,25 +108,6 @@ class Authentication extends AbstractController {
     } catch (error) {
       return res.status(500).json(error);
     }
-  }
-
-  private createCookie(tokenData: TokenData): string {
-    return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn}`;
-  }
-
-  private createToken(user: User): TokenData {
-    console.log(user);
-    return;
-    /*
-    const expiresIn = 60 * 60; // an hour
-    const secret = process.env.JWT_SECRET;
-    const dataStoredInToken: DataStoredInToken = {
-      _id: user._id,
-    };
-    return {
-      expiresIn,
-      token: jwt.sign(dataStoredInToken, secret, { expiresIn }),
-    };*/
   }
 
 }
