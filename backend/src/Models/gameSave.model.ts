@@ -12,14 +12,80 @@ const GameSaveSchema = new Schema({
     water: { type: Number, default: 0 },
   },
   characters: {
-    workers: {
+    worker: {
       nWorkers: { type: Number, default: 1 },
       features: {
-        level: { type: Number, default: 0 },
-        speed: { type: Number, default: 0 },
+        level: { type: Number, default: 1 },
+        speed: { type: Number, default: 1 },
         energyExperience: { type: Number, default: 0 },
         resourcesExperience: { type: Number, default: 0 },
-        buildingExperience: { type: Number, default: 0 },
+        buildingExperience: { type: Number, default: 1 },
+      }
+    },
+    army:{
+      officers: {
+        cadet:{
+          nCadet: { type: Number, default: 0},
+          features: {
+            level: { type: Number, default: 0 },
+            speed: { type: Number, default: 0 },
+            attack: { type: Number, default: 0 },
+            amour: { type: Number, default: 0 },
+            shield: { type: Number, default: 0 },
+            weapon: {
+              damage: { type: Number, default: 0 },
+              amourPenetration: { type: Number, default: 0},
+              level: { type: Number, default: 0 }
+            }
+          }
+        },
+        candidate:{
+          nCandidate: { type: Number, default: 0},
+          features: {
+            level: { type: Number, default: 0 },
+            speed: { type: Number, default: 0 },
+            attack: { type: Number, default: 0 },
+            amour: { type: Number, default: 0 },
+            shield: { type: Number, default: 0 },
+            weapon: {
+              damage: { type: Number, default: 0 },
+              amourPenetration: { type: Number, default: 0},
+              level: { type: Number, default: 0 }
+            }
+          }
+        }
+      },
+      nonOfficers: {
+        soldier:{
+          nSoldier: { type: Number, default: 0},
+          features: {
+            level: { type: Number, default: 0 },
+            speed: { type: Number, default: 0 },
+            attack: { type: Number, default: 0 },
+            amour: { type: Number, default: 0 },
+            shield: { type: Number, default: 0 },
+            weapon: {
+              damage: { type: Number, default: 0 },
+              amourPenetration: { type: Number, default: 0},
+              level: { type: Number, default: 0 }
+            }
+          }
+        },
+        corporal:{
+          nCorporal: { type: Number, default: 0},
+          features: {
+            level: { type: Number, default: 0 },
+            speed: { type: Number, default: 0 },
+            attack: { type: Number, default: 0 },
+            amour: { type: Number, default: 0 },
+            shield: { type: Number, default: 0 },
+            weapon: {
+              damage: { type: Number, default: 0 },
+              amourPenetration: { type: Number, default: 0},
+              level: { type: Number, default: 0 }
+            }
+          }
+        }
       }
     }
   },

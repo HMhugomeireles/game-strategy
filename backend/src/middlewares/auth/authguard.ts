@@ -3,7 +3,6 @@ import { Request, Response, NextFunction } from 'express';
 import Endpoints from '../../util/endpoint';
 
 export const secureGuard = async (req: Request, res: Response, next: NextFunction) => {
-  console.log("secured")
   let tokenHeader = <string>req.headers['x-access-token'] || req.headers['authorization'];
   const host = process.env.HOST;
   const errorResponse = {
@@ -15,8 +14,9 @@ export const secureGuard = async (req: Request, res: Response, next: NextFunctio
   }
 
   // not exist token
-  if (typeof tokenHeader === 'undefined') {
+  if (typeof tokenHeader === 'undefined' || tokenHeader === null) {
     res.status(403).json(errorResponse);
+    return;
   }
 
   // remove the bearer and space from string
@@ -24,6 +24,7 @@ export const secureGuard = async (req: Request, res: Response, next: NextFunctio
 
   if (token === undefined || token === null) {
     res.status(403).json(errorResponse);
+    return;
   }
 
   let jwtPayload;
@@ -31,23 +32,24 @@ export const secureGuard = async (req: Request, res: Response, next: NextFunctio
   try {
 
     jwtPayload = jwt.verify(token, process.env.SECRET);
+    
     res.locals.jwtPayload = jwtPayload; 
+    // need to check if the user are logged
+    const { userId } = jwtPayload;
+    const newToken = jwt.sign(
+      { userId },
+      process.env.SECRET, 
+      { expiresIn: "1h" }
+    );
+      
+    console.log(jwtPayload)
+    //Call the next middleware or controller
+    next();
 
   } catch (error) {
     res.status(403).json(errorResponse);
     return;
   }
-
-  const { userId } = jwtPayload;
-  const newToken = jwt.sign(
-    { userId },
-    process.env.SECRET, 
-    { expiresIn: "1h" }
-  );
-  
-
-  //Call the next middleware or controller
-  next();
 
 }
 

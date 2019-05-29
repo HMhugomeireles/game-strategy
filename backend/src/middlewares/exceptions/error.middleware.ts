@@ -5,6 +5,7 @@ const errorMiddleware = (error: HttpException, req: Request, res: Response, next
 	const status = error.status || 500;
 	const message = error.message || 'Something went wrong';
 	res.status(status).json({
+    debug: error,
 		error: message
 	});
 };
