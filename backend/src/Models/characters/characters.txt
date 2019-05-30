@@ -1,0 +1,20 @@
+CHARACTER
+Hero, Soldados, Cavalaria, Infantaria, Arqueiros, Batedor, Mercenários
+nivel, ataque, vida, defesa, velocidade, escudo
+
+Hero
+	Habilidades, Precisão
+Soldados
+	
+Cavelaria
+
+Infantaria
+
+Arqueiros
+
+Batedor
+	
+Mercenários
+
+Terra
+location, tamanho 

@@ -1,4 +1,4 @@
-import PlayerConnectionInterface from './../../../models/interfaces/player/playerConnection.interface';
+import PlayerConnectionInterface from './../../../../models/interfaces/player/playerConnection.interface';
 import { Socket } from 'socket.io';
 
 class PlayerConnection implements PlayerConnectionInterface {

@@ -10,7 +10,7 @@ import Controller from './controllers/interfaces/controller.interface';
 import socketsActions from './controllers/socket/socketsArray';
 import SocketActionInterface from './controllers/socket/socketAction.interface';
 import PlayerConnectionInterface from './models/interfaces/player/playerConnection.interface';
-import PlayerConnection from './game/player/entity/playerConnection';
+import PlayerConnection from './services/game/player/entity/playerConnection';
 import errorHandler from './middlewares/exceptions/error.middleware';
 
 class App {

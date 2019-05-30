@@ -1,5 +1,4 @@
 import uuid from 'uuid/v4';
-import Dotenv from 'dotenv';
 
 class Util {
 	/**
@@ -9,13 +8,6 @@ class Util {
    */
 	public static createNewUID(): string {
 		return uuid();
-	}
-
-	/**
-   * Get the environments variables in the file .env
-   */
-	public static setEnv(): void {
-		Dotenv.config();
 	}
 }
 
