@@ -9,15 +9,19 @@ import ArmyII from './../characters/';
 import ArmyIII from './../characters/';
 import SpecialForce from './../characters/';
 import Seal from './../characters/';
+import BuildingAbstract from '../builds/building';
+import TypeBuilding from '../builds/TypeBuilding';
 
 class CharacterFactory {
 
-  public static createCharacter(typeCharacter: TypeCharacter, playerSheet: PlayerSheet): Character {
+  public static createCharacter(typeCharacter: TypeCharacter, playerSheet: PlayerSheet, builderRequireType: TypeBuilding): Character {
     let newCharacter: Character;
 
     switch(typeCharacter) {
       case TypeCharacter.WORKER:
-        newCharacter = new Worker(playerSheet);
+        if(TypeBuilding.BASE === builderRequireType) {
+          newCharacter = new Worker(playerSheet);
+        }
         break;
       case TypeCharacter.INFANTRY:
         newCharacter = new Infantry(playerSheet);
@@ -43,3 +47,5 @@ class CharacterFactory {
   }
 
 }
+
+export default CharacterFactory;

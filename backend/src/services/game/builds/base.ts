@@ -5,6 +5,9 @@ import TypeBuildingState from './typeBuildingState';
 
 //import baseBuildingSheetDB from '';
 import playerGameSaveSheet from '';
+import FactoryCharacter from './../factory/characterFactory';
+import TypeCharacter from '../characters/typeCharacter';
+import TypeBuilding from './TypeBuilding';
 
 class Base extends BuildingAbstract {
   private buildingState: [TypeBuildingState, number];
@@ -29,7 +32,9 @@ class Base extends BuildingAbstract {
 
   public produceWorker() {
     // call the factory for create worker 
+    return FactoryCharacter.createCharacter(TypeCharacter.WORKER, playerGameSaveSheet, TypeBuilding.BASE);
   }
+
 
 }
 
