@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <title>Game</title>
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="top-bar"></div>
+
+    <canvas id="game"></canvas>
+    <!--
+      <canvas id="fog"></canvas>
+      <canvas id="dark"></canvas>
+    -->
+
+    <div class="bottom-bar"></div>
+  </div>
+  
+  <script>
+    const canvas = document.getElementById('game');
+    let context = canvas.getContext('2d');
+    const tileSize = 5;
+    const cols = (canvas.offsetWidth / tileSize);
+    const rows = (canvas.offsetHeight / tileSize);
+
+    function x() {
+      context.lineWidth = "1";
+      context.strokeStyle = "back";
+      for(var i = 0; i < rows; i++) {
+        for(var j = 0; j < cols; j++) {
+          context.rect(j*tileSize,i*tileSize,tileSize,tileSize);
+          context.stroke();
+        }
+      }
+    }
+  </script>
+</body>
+</html>

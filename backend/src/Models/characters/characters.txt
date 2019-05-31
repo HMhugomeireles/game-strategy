@@ -18,3 +18,11 @@ Mercenários
 
 Terra
 location, tamanho 
+
+RESOURCES
+wood: 
+food: 
+iron: 
+oil: 
+stone: 
+water: 
