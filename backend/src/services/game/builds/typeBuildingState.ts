@@ -1,5 +1,6 @@
 enum TypesBuildingState {
   STANDBY,
+  UPDATING,
   PRODUCTION
 }
 

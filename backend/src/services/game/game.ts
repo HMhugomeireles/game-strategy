@@ -1,5 +1,7 @@
 import Worker from './characters/workerCharacter';
 import Base from './builds/base';
+import TypeCharacter from './characters/typeCharacter';
+import PlayerSheet from './player/playerSheet';
 
 class Game {
   private characters: [Array<Worker>];
@@ -7,6 +9,11 @@ class Game {
   
   public constructor() {
 
+    let a = new PlayerSheet();
+
+    let b = new Base(1,[1,1],[1,1],1,1000,5,TypeCharacter.WORKER,a);
+
+    b.
   }
   
   public load(player) {
@@ -15,6 +22,7 @@ class Game {
 
 
   public build() {
+    /*
     const defaultConstructionTime = baseBuildingSheetDB.constructionTime;
     const calculation = (defaultConstructionTime * super.getLevel()) - worker.getBuildingExperience()
     const finalConstructionTime = 0
@@ -22,6 +30,7 @@ class Game {
     setTimeout(() => {
       
     }, timeout);
+  */
   }
   
 

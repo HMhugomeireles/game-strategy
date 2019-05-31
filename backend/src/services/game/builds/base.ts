@@ -1,18 +1,17 @@
+import { Gamei18n } from './../i18n_Game';
 import BuildingAbstract from './building';
-import TypeCreation from '../typesCreation';
 import WorkerCharacter from './../characters/workerCharacter';
-import TypeBuildingState from './typeBuildingState';
 
 //import baseBuildingSheetDB from '';
-import playerGameSaveSheet from '';
 import FactoryCharacter from './../factory/characterFactory';
 import TypeCharacter from '../characters/typeCharacter';
 import TypeBuilding from './TypeBuilding';
+import PlayerSheet from '../player/playerSheet';
 
 class Base extends BuildingAbstract {
-  private buildingState: [TypeBuildingState, number];
+  private typeCharacter: TypeCharacter = TypeCharacter.WORKER;
   private upgrade: [boolean, WorkerCharacter];
-  private sheetBuilding: any;
+  
 
   public constructor(
     _id: string,
@@ -21,20 +20,16 @@ class Base extends BuildingAbstract {
     level: number, 
     resistance: [number, number ], 
     nWorkerSlots: number,
-    typeCreation: TypeCreation,
+    playerSheet: PlayerSheet
     ) {
-    super(_id,cityPosition,position,level,resistance,nWorkerSlots,typeCreation);
-  }
-
-  public upgradeBuilding() {
-    super.updateLevel(super.getLevel() + 1);
+    super(_id,cityPosition,position,level,resistance,nWorkerSlots,playerSheet);
   }
 
   public produceWorker() {
     // call the factory for create worker 
-    return FactoryCharacter.createCharacter(TypeCharacter.WORKER, playerGameSaveSheet, TypeBuilding.BASE);
+    // not finish
+    return FactoryCharacter.createCharacter(this.typeCharacter, super.getPlayerSheet(), TypeBuilding.BASE);
   }
-
 
 }
 

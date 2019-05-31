@@ -1,6 +1,8 @@
 //import Worker from './'
 
-interface PlayerSheet {
+class PlayerSheet {
+
+  public constructor(){}
   //getWorkerInfo(): WorkerInfo;
 }
 
