@@ -2,6 +2,7 @@ import Worker from '../characters/workerCharacter';
 import PlayerSheet from '../player/playerSheet';
 import TypeBuildingState from './typeBuildingState';
 import { Gamei18n } from './../i18n_Game';
+import TypesBuildingState from './typeBuildingState';
 
 
 abstract class BuildingAbstract {
@@ -71,37 +72,21 @@ abstract class BuildingAbstract {
     }
   }
 
-  /**
-   * 
-   * @param typeBuildingState 
-   * @param timeToEndState 
-   * 
-   * @returns {string}
-   */
-  public updateBuildingState(typeBuildingState: TypeBuildingState, timeToEndState: number): string {
-    let typeState = 0;
-    if (TypeBuildingState.STANDBY !== this.buildingState[typeState]) {
-      return `${Gamei18n.en.BUILDING_BUSY}`;
-    }
-    // Not possible put working without worker
-    if(this.workerSlots.length === 0) {
-      return `${Gamei18n.en.BUILDING_DONT_HAVE_WORKER}`;
-    }
-    // set state to new state
-    this.buildingState = [typeBuildingState, timeToEndState];
-  }
-
-
-  public upgradeBuilding(): string {
-    
-    return
-  }
 
   public getState(): [TypeBuildingState, number] {
     return this.buildingState;
   }
+
+  /**
+   * Change the state of the building
+   * @param state {[TypesBuildingState, timeToFinish]}
+   * @returns {void}
+   */
+  public setState(state: [TypesBuildingState, number]): void {
+    this.buildingState = state;
+  }
   
-  private updateLevel(level: number): void {
+  public updateLevel(level: number): void {
     this.level = level;
   }
 
@@ -146,7 +131,7 @@ abstract class BuildingAbstract {
   /**
    * Remove the Worker from the building and 
    * return the Worker if the slots have workers
-   * other otherwise return false 
+   * otherwise return false 
    * 
    * @returns {Worker}
    * or

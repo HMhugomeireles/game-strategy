@@ -13,7 +13,7 @@ class Game {
 
     let b = new Base(1,[1,1],[1,1],1,1000,5,TypeCharacter.WORKER,a);
 
-    b.
+    
   }
   
   public load(player) {
