@@ -3,6 +3,12 @@ import TypeCharacter from './../characters/typeCharacter';
 import PlayerSheet from './../player/playerSheet';
 
 import Worker from './../characters/workerCharacter';
+import Infantry from './../characters/';
+import ArmyI from './../characters/';
+import ArmyII from './../characters/';
+import ArmyIII from './../characters/';
+import SpecialForce from './../characters/';
+import Seal from './../characters/';
 
 class CharacterFactory {
 
