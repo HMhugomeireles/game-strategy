@@ -1,8 +1,9 @@
 import Worker from '../characters/workerCharacter';
 import PlayerSheet from '../player/playerSheet';
 import TypeBuildingState from './typeBuildingState';
-import { Gamei18n } from './../i18n_Game';
+import * as GameSheet from './../gameSheet';
 import TypesBuildingState from './typeBuildingState';
+import TypeBuilding from './TypeBuilding';
 
 
 abstract class BuildingAbstract {
@@ -16,6 +17,7 @@ abstract class BuildingAbstract {
   private workerSlots: Array<Worker>;
   private inWreckage: boolean;
   private playerSheet: PlayerSheet;
+  private gameSheet: GameSheet;
 
 
   public constructor(
@@ -25,7 +27,8 @@ abstract class BuildingAbstract {
     level: number, 
     resistance: [number, number], 
     nWorkerSlots: number,
-    playerSheet: PlayerSheet
+    playerSheet: PlayerSheet,
+    gameSheet: any
     ){
     this._id = _id;
     this.position = cityPosition;
@@ -35,9 +38,11 @@ abstract class BuildingAbstract {
     this.nWorkerSlots = nWorkerSlots;
     this.inWreckage = false;
     this.playerSheet = playerSheet;
+    this.gameSheet = gameSheet;
   }
 
   /**
+   * Put the worker in the building to upgrade the building
    * 
    * @param worker 
    * @returns {boolean}
@@ -54,6 +59,7 @@ abstract class BuildingAbstract {
   }
 
   /**
+   * Receive damage and update the resistance of building
    * 
    * @param damage {number}
    * @returns {void}
@@ -72,20 +78,54 @@ abstract class BuildingAbstract {
     }
   }
 
+  /**
+   * Remove the Worker from the building and 
+   * return the Worker if the slots have workers
+   * otherwise return false 
+   * 
+   * @returns {Worker}
+   * or
+   * @returns {false}
+   * 
+   */
+  public removeWorkerFromBuilding(): any {
+    if (this.workerSlots.length === 0) {
+      return false
+    }
+    return this.workerSlots.pop();
+  }
+  
+  /**
+   * 
+   * 
+   * @param {typeBuilding}
+   * 
+   * @returns {BaseSheet}
+   */
+  public getBaseTimeOfBuildingTypeFromGameSheet(typeBuilding: TypeBuilding): BaseSheet {
+    let BaseSheet = {} as BaseSheet;
+  }
 
-  public getState(): [TypeBuildingState, number] {
-    return this.buildingState;
+
+  public getPlayerWorksExperienceOnBuildingFromPlayerSheet(): number {
+
+    return;
   }
 
   /**
    * Change the state of the building
+   * 
    * @param state {[TypesBuildingState, timeToFinish]}
    * @returns {void}
    */
   public setState(state: [TypesBuildingState, number]): void {
     this.buildingState = state;
   }
-  
+
+  public getState(): [TypeBuildingState, number] {
+    return this.buildingState;
+  }
+
   public updateLevel(level: number): void {
     this.level = level;
   }
@@ -128,22 +168,7 @@ abstract class BuildingAbstract {
     return this.workerSlots;
   }
 
-  /**
-   * Remove the Worker from the building and 
-   * return the Worker if the slots have workers
-   * otherwise return false 
-   * 
-   * @returns {Worker}
-   * or
-   * @returns {false}
-   * 
-   */
-  public removeWorkerFromBuilding(): any {
-    if (this.workerSlots.length === 0) {
-      return false
-    }
-    return this.workerSlots.pop();
-  }
+
 
 }
 
