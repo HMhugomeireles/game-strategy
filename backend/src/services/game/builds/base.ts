@@ -1,16 +1,16 @@
 import { Gamei18n } from './../i18n_Game';
+import { BuildingPropertyKey } from './../sheets/buildingPropertyKey';
+import { FactoryCharacter } from './../factory/characterFactory';
 import BuildingAbstract from './building';
-import WorkerCharacter from './../characters/workerCharacter';
-import FactoryCharacter from './../factory/characterFactory';
 import TypeCharacter from '../characters/typeCharacter';
 import TypeBuilding from './TypeBuilding';
-import PlayerSheet from '../player/playerSheet';
+import PlayerSheet from '../sheets/playerSheet/playerSheet';
 import TypesBuildingState from './typeBuildingState';
 import MathFormulas from './../mathematics/mathFormulas';
 
 class Base extends BuildingAbstract {
   private typeCharacter: TypeCharacter = TypeCharacter.WORKER;
-  private upgrade: [boolean, WorkerCharacter];
+  private workersCreated: Array<Worker> = [];
 
   public constructor(
     _id: string,
@@ -20,9 +20,8 @@ class Base extends BuildingAbstract {
     resistance: [number, number ], 
     nWorkerSlots: number,
     playerSheet: PlayerSheet,
-    gameSheet: any
     ) {
-    super(_id,cityPosition,position,level,resistance,nWorkerSlots,playerSheet,gameSheet);
+    super(_id,cityPosition,position,level,resistance,nWorkerSlots,playerSheet);
   }
 
   /**
@@ -33,33 +32,26 @@ class Base extends BuildingAbstract {
    * Use the playerSheet save and
    * use the gameSheet.
    * 
-   * @returns {string}
+   * @returns {boolean}
    * Return the message 
    */
-  public updatingBuilding(): string {
-    const typeState = 0;
+  public updatingBuilding(): boolean {
 
-    const builderState: [TypesBuildingState , number] = super.getState();
-
-    if (builderState[typeState] !== TypesBuildingState.STANDBY) {
-      return `${Gamei18n.en.BUILDING_BUSY}`;
+    if(super.getStateType() !== TypesBuildingState.STANDBY) {
+      return false;
     }
     // Not possible put working without worker
     if(super.getWorkerListOnBuilding().length === 0) {
-      return `${Gamei18n.en.BUILDING_DONT_HAVE_WORKER}`;
+      return false;
     }
 
     // calc the time to upgrade
     let setState: [TypesBuildingState, number];
     let calcTime: number = 0;
 
-    // get base time from gameSheet
-    let baseTime = super.getBaseTimeOfBuildingTypeFromGameSheet(TypeBuilding.BASE).getBaseTime();
-    // get current level
+    let baseTime = super.getBaseTimeOfBuildingTypeFromGameSheet(TypeBuilding.BASE, BuildingPropertyKey.TIME_BUILD);
     let buildingLevel = super.getLevel();
-    // get numbers of works in the building
     let nWorkersOnBuilding = super.getWorkerListOnBuilding().length;
-    // get from playerSheet the experience of works
     let playerWorksExperienceOnBuilding = super.getPlayerWorksExperienceOnBuildingFromPlayerSheet();
 
     // Make the calculation 
@@ -68,15 +60,55 @@ class Base extends BuildingAbstract {
     setState = [TypesBuildingState.UPDATING, calcTime];
     // set state to new state
     super.setState(setState);
-    
+    return true;
   }
 
-  public produceWorker() {
-    // call the factory for create worker 
-    // not finish
-    return FactoryCharacter.createCharacter(this.typeCharacter, super.getPlayerSheet(), TypeBuilding.BASE);
+  /**
+   * Make the production of Worker Character and 
+   * setState the building to Production and
+   * time need to end
+   * 
+   * Use the playerSheet save and
+   * use the gameSheet.
+   * 
+   * @param {nToCreate: number}
+   * 
+   * @returns {boolean}
+   */
+  public produceWorker(nToCreate: number): boolean {
+
+    if(super.getStateType() !== TypesBuildingState.STANDBY) {
+      return false;
+    }
+
+    let baseTime = 0;
+    let nWorkersOnBuilding = super.getWorkerListOnBuilding().length;
+    let playerWorkersLevel = this.getPlayerWorkersLevel();
+
+    let timeToEndCreation = MathFormulas.calcTimeToCreateWorker(baseTime, nWorkersOnBuilding, playerWorkersLevel);
+    let setState: [TypesBuildingState, number];
+
+
+    for(let start = 0; start < nToCreate; start++) {
+      this.workersCreated.push(
+        //cast to Worker 
+       <Worker>FactoryCharacter.createCharacter(this.typeCharacter, super.getPlayerSheet(), TypeBuilding.BASE)
+      )
+    }
+
+    setState = [TypesBuildingState.PRODUCTION, timeToEndCreation];
+    super.setState(setState);
+
+    return true; 
   }
 
+  private getPlayerWorkersLevel(): number {
+    let playerSheet = super.getPlayerSheet();
+
+    let workerLevel = playerSheet["Character"]["Worker"]["level"];
+
+    return workerLevel;
+  }
 
 
 }

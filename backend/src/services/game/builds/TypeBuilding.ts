@@ -3,10 +3,12 @@ enum TypeBuilding {
   CARPENTRY,
   SLAUGHTER_HOUSE,
   IRON_HOUSE,
-  REFINERY,
+  REFINERY_OIL,
+  REFINERY_GOLD,
   QUARRY,
   WATER_WELL,
-  ARMY_HOUSE
+  ARMY_HOUSE,
+  MILITARY_ACADEMY
 }
 
 export default TypeBuilding;

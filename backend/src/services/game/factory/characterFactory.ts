@@ -9,11 +9,20 @@ import ArmyII from './../characters/';
 import ArmyIII from './../characters/';
 import SpecialForce from './../characters/';
 import Seal from './../characters/';
-import BuildingAbstract from '../builds/building';
 import TypeBuilding from '../builds/TypeBuilding';
 
-class CharacterFactory {
+export class FactoryCharacter {
 
+  /**
+   * Create new Character from same Types and the
+   * type of building from the player sheet definition
+   * 
+   * @param typeCharacter 
+   * @param playerSheet 
+   * @param builderRequireType
+   * 
+   * @returns {new Character} 
+   */
   public static createCharacter(typeCharacter: TypeCharacter, playerSheet: PlayerSheet, builderRequireType: TypeBuilding): Character {
     let newCharacter: Character;
 
@@ -47,5 +56,3 @@ class CharacterFactory {
   }
 
 }
-
-export default CharacterFactory;

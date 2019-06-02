@@ -10,6 +10,10 @@ class MathFormulas {
     return timeToUpgrade;
   }
 
+  public static calcTimeToCreateWorker(baseTime: number, nWorkersOnBuilding: number, playerWorkersLevel: number): number {
+    throw new Error("Not implemented.");
+  }
+
 }
 
 export default MathFormulas;

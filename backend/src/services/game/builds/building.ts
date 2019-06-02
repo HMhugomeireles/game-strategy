@@ -1,14 +1,13 @@
+import { BuildingPropertyKey } from './../sheets/buildingPropertyKey';
+import { SheetFunc } from './../gameUtil/sheetFunc';
 import Worker from '../characters/workerCharacter';
-import PlayerSheet from '../player/playerSheet';
-import TypeBuildingState from './typeBuildingState';
-import * as GameSheet from './../gameSheet';
+import PlayerSheet from './../sheets/playerSheet/playerSheet';
 import TypesBuildingState from './typeBuildingState';
 import TypeBuilding from './TypeBuilding';
 
-
 abstract class BuildingAbstract {
   private _id: string;
-  private buildingState: [TypeBuildingState, number];
+  private buildingState: [TypesBuildingState, number];
   private cityPosition: [number, number]; 
   private position: [number, number];
   private level: number;
@@ -17,8 +16,6 @@ abstract class BuildingAbstract {
   private workerSlots: Array<Worker>;
   private inWreckage: boolean;
   private playerSheet: PlayerSheet;
-  private gameSheet: GameSheet;
-
 
   public constructor(
     _id: string,
@@ -27,8 +24,7 @@ abstract class BuildingAbstract {
     level: number, 
     resistance: [number, number], 
     nWorkerSlots: number,
-    playerSheet: PlayerSheet,
-    gameSheet: any
+    playerSheet: PlayerSheet
     ){
     this._id = _id;
     this.position = cityPosition;
@@ -38,7 +34,6 @@ abstract class BuildingAbstract {
     this.nWorkerSlots = nWorkerSlots;
     this.inWreckage = false;
     this.playerSheet = playerSheet;
-    this.gameSheet = gameSheet;
   }
 
   /**
@@ -102,8 +97,8 @@ abstract class BuildingAbstract {
    * 
    * @returns {BaseSheet}
    */
-  public getBaseTimeOfBuildingTypeFromGameSheet(typeBuilding: TypeBuilding): BaseSheet {
-    let BaseSheet = {} as BaseSheet;
+  public getBaseTimeOfBuildingTypeFromGameSheet(typeBuilding: TypeBuilding, buildingPropertyKey: BuildingPropertyKey): number {
+    return SheetFunc.getValueFromGameSheetByTypeBuilding(typeBuilding, buildingPropertyKey);
   }
 
 
@@ -122,8 +117,14 @@ abstract class BuildingAbstract {
     this.buildingState = state;
   }
 
-  public getState(): [TypeBuildingState, number] {
-    return this.buildingState;
+  public getStateType(): TypesBuildingState {
+    let typeState = 0
+    return this.buildingState[typeState];
+  }
+
+  public getStateTime(): number {
+    let stateTime = 1;
+    return this.buildingState[stateTime];
   }
 
   public updateLevel(level: number): void {
