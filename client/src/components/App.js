@@ -1,13 +1,12 @@
 import React from 'react';
-import './App.css';
 
 
-import Login from './auth/Login';
+import Page from './layout/Page';
 
 
 function App() {
   return (
-    <Login />
+    <Page />
   );
 }
 
