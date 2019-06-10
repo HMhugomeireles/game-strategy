@@ -26,3 +26,30 @@ export const SideBarGrid = styled.div`
 export const FooterGrid = styled.div`
   grid-column: 1 / 2;
 `;
+
+export const ChatRow = styled.li`
+  margin: 5px;
+  color: #333;
+
+  span {
+    display: block;
+    border-radius: 40px;
+    background: #f9f9f9;
+    font-size: 1.5rem;
+    width: 60%;
+
+    img {
+      width: 60px;
+      border-radius: 50%;
+      margin-right: 15px;
+    }
+  }
+
+  div {
+    background: #f2f2f2;
+    border-radius: 10px;
+    margin: 10px;
+    padding:15px;
+  }
+
+`

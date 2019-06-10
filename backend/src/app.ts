@@ -2,7 +2,6 @@ import { createServer, Server } from 'http';
 import express from 'express';
 import socket from 'socket.io';
 import cors from 'cors';
-import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -17,13 +16,13 @@ class App {
 	private app: express.Application;
 	private server: Server;
 	private io: SocketIO.Server;
-	private onlineUsers: Array<PlayerConnectionInterface>;
+	private onlineUsers: Map<String,PlayerConnectionInterface>;
 
 	public constructor(controllers: Controller[]) {
 		this.app = express();
 		this.server = createServer(this.app);
 		this.io = socket(this.server);
-		this.onlineUsers = [];
+		this.onlineUsers = new Map();
 
 		this.database();
 		this.initMiddlewares();
@@ -50,22 +49,17 @@ class App {
 
 	private socketsConnection(): void {
 		this.io.on('connection', (socketClient) => {
-			let clientName = 'Client_' + (this.onlineUsers.length + 1);
-			const connection = new PlayerConnection(clientName, socketClient);
-			this.onlineUsers.push(connection);
+			let clientName = 'Client_' + (this.onlineUsers.size + 1);
+			this.onlineUsers.set(socketClient.id, new PlayerConnection(clientName, socketClient));
 
 			socketClient.on('disconnect', () => {
-				this.onlineUsers.forEach((player, index) => {
-					if (player.getSocketClient().id === socketClient.id) {
-						this.onlineUsers.slice(index, 1);
-					}
-				});
-				socketClient.broadcast.emit('onlineUsers', { onlineUsers: this.onlineUsers.length });
-				console.log('Client disconnect from chat Server.');
+				this.onlineUsers.delete(socketClient.id);
+				socketClient.broadcast.emit('onlineUsers', { onlineUsers: this.onlineUsers.size });
+				console.log(`Client ${socketClient.id} disconnect from chat Server.`);
 			});
 
 			// Send number of connection
-			socketClient.emit('onlineUsers', { onlineUsers: this.onlineUsers.length });
+			socketClient.emit('onlineUsers', { onlineUsers: this.onlineUsers.size });
 
 			socketsActions.forEach((socketAction: SocketActionInterface): void => {
 				socketAction.start(clientName, socketClient, this.io);
