@@ -1,4 +1,4 @@
-import ChatServer from './chatServer';
+import ChatServer from './events/chatServer';
 
 const allAction = [
   new ChatServer

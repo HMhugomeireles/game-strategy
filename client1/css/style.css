@@ -1,0 +1,28 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  border: 5px solid #eee;
+}
+
+.top-bar {
+  background: #eee;
+  width: 800px;
+  height: 100px;
+  position: absolute;
+  top:0;
+  left: 50%;
+  margin-left: -400px;
+}
+
+#game {
+  width: calc(100vw - 10px);
+  height: calc(100vh - 10px);
+  background: #222;
+  z-index: -1;
+}
