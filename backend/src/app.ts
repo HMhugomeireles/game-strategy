@@ -11,6 +11,7 @@ import SocketActionInterface from './controllers/socket/socketAction.interface';
 import PlayerConnectionInterface from './models/interfaces/player/playerConnection.interface';
 import PlayerConnection from './services/game/player/entity/playerConnection';
 import errorHandler from './middlewares/exceptions/error.middleware';
+import { createSecureServer } from 'http2';
 
 class App {
 	private app: express.Application;
@@ -56,6 +57,14 @@ class App {
 				this.onlineUsers.delete(socketClient.id);
 				socketClient.broadcast.emit('onlineUsers', { onlineUsers: this.onlineUsers.size });
 				console.log(`Client ${socketClient.id} disconnect from chat Server.`);
+			});
+
+			socketClient.on( 'VERIFY_USER', (nickname, callback) => {
+					if(this.onlineUsers.has(socketClient.id)) {
+						callback({ isUser: true, user: null })
+					} else {
+						callback({ isUser: false, user: createSecureServer() })
+					}
 			});
 
 			// Send number of connection
