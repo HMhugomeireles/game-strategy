@@ -1,0 +1,46 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+.container {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+canvas {
+  background: #393B52;
+}
+
+
+
+/* .container {
+  display: grid;
+
+  height: 100vh;
+
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 10vh 1fr 10vh;
+  background: #393B52;
+  color: #fff;
+}
+
+.top--menu {
+  grid-column: 1 / 4; 
+  grid-row: 1 / 2;
+
+  background: red;
+}
+
+.game {
+  grid-row: 1 / 5;
+}
+
+.bottom-menu {
+  grid-row: 4 / 5;
+
+  background: green;
+} */
