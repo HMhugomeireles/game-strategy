@@ -1,4 +1,4 @@
 # Todo
 
-[ ] - create docker file
-[ ] - create docker-compose
+[x] - create docker file
+[x] - create docker-compose

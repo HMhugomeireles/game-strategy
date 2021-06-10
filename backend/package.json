@@ -9,9 +9,11 @@
   },
   "main": "src/server.ts",
   "scripts": {
-    "dev": "nodemon ./src/server.ts",
-    "build": "sucrase ./src -d ./build --transforms typescript,imports",
-    "test": ""
+    "dev": "nodemon -L src/index.ts",
+    "docker-local": " nodemon --inspect=0.0.0.0:9229 app/index.js",
+    "start": "node --inspect=5858 -r ts-node/register ./src/server.ts",
+    "start:watch": "nodemon",
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/cors": "^2.8.5",
