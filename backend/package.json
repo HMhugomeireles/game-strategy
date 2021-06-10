@@ -9,9 +9,9 @@
   },
   "main": "src/server.ts",
   "scripts": {
-    "dev": "nodemon -L src/index.ts",
-    "docker-local": " nodemon --inspect=0.0.0.0:9229 app/index.js",
-    "start": "node --inspect=5858 -r ts-node/register ./src/server.ts",
+    "dev": "nodemon -L src/main.ts",
+    "docker-local": " nodemon --inspect=0.0.0.0:7711 ./src/main.ts",
+    "start": "node --inspect=5858 -r ts-node/register ./src/main.ts",
     "start:watch": "nodemon",
     "build": "tsc"
   },
