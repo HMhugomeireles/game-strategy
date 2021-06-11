@@ -16,7 +16,7 @@ module.exports = {
         "typescript"
     ],
     parserOptions: {
-        "ecmaVersion": 2018,
+        "ecmaVersion": 2018z,
         "sourceType": "module"
     },
     rules: {
