@@ -7,11 +7,11 @@
   "author": {
     "name": "Hugo Meireles"
   },
-  "main": "src/server.ts",
+  "main": "src/main/server.ts",
   "scripts": {
-    "dev": "nodemon -L src/main.ts",
-    "docker-local": " nodemon --inspect=0.0.0.0:7711 ./src/main.ts",
-    "start": "node --inspect=5858 -r ts-node/register ./src/main.ts",
+    "dev": "nodemon -L src/main/server.ts",
+    "docker-local": " nodemon --inspect=0.0.0.0:7711 ./src/main/server.ts",
+    "start": "node --inspect=5858 -r ts-node/register ./src/main/server.ts",
     "start:watch": "nodemon",
     "build": "tsc",
     "test": "jest"
@@ -42,6 +42,7 @@
     "prettier": "^1.19.1",
     "sucrase": "^3.18.2",
     "ts-jest": "^27.0.3",
+    "ts-node": "^10.0.0",
     "typescript": "^3.9.9"
   },
   "dependencies": {
@@ -52,6 +53,7 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.0",
     "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
     "mongodb": "^3.6.9",
     "mongoose": "^5.12.13",
     "passport": "^0.4.0",
@@ -60,5 +62,8 @@
     "socket.io": "^2.2.0",
     "tslint": "^5.16.0",
     "uuid": "^3.3.2"
+  },
+  "_moduleAliases": {
+    "@": "dist"
   }
 }
