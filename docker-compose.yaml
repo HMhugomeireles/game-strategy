@@ -10,7 +10,7 @@ services:
       - ./data/server-mongo-frontend:/data/db
     restart: unless-stopped
     ports:
-      - 7703:27017
+      - 27017:27017
 
   server-redis-database:
     image: redis:latest

@@ -1,7 +1,8 @@
 import { Router } from 'express'
 import { adaptRoute } from '@/main/adapters';
-import { LoadPlayerResourcesController } from '@/presentation/controllers/player/laod-player-resources';
+import { factoryLoadPlayerResourceController } from '../factories/player';
+
 
 export default (router: Router): void => {
-  router.get('/player/:playerId/resources/all', adaptRoute(LoadPlayerResourcesController));
+  router.get('/player/:playerId/resources/all', adaptRoute(factoryLoadPlayerResourceController()));
 }
