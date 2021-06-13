@@ -1,13 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "outDir": "dist",
-    "sourceMap": true
+    "strictPropertyInitialization": false,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node",
+    "target": "es2019",
+    "module": "esnext",
+    "allowJs": true,
+    "outDir": "build",
+    "strict": true,
+    "noImplicitAny": true,
+    "resolveJsonModule": true,
+    "rootDir": "src",
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"]
+    }
   },
-  "include": [
-    "src/**/*.ts"
-  ],
+  "include": ["src"],
   "exclude": [
     "node_modules",
     ".vscode"
