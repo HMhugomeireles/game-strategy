@@ -1,4 +1,4 @@
-import constants from "./constants";
+import constants from "../../configs/constants";
 
 export const environment = {
   port: process.env.PORT || 7701,
